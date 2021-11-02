@@ -11,7 +11,6 @@ from ovos_utils.skills import get_skills_folder
 
 from mycroft.skills.core import resting_screen_handler, intent_file_handler, MycroftSkill
 from mycroft.skills.skill_loader import load_skill_module
-from mycroft.skills.skill_manager import SkillManager
 from mycroft.skills.api import SkillApi
 
 
@@ -19,7 +18,6 @@ class OVOSHomescreen(MycroftSkill):
     # The constructor of the skill, which calls MycroftSkill's constructor
     def __init__(self):
         super(OVOSHomescreen, self).__init__(name="OVOSHomescreen")
-        self.skill_manager = None
         self.notifications_model = []
         self.notifications_storage_model = []
         self.def_wallpaper_folder = path.dirname(__file__) + '/ui/wallpapers/'
@@ -42,7 +40,6 @@ class OVOSHomescreen(MycroftSkill):
             now.year, now.month, now.day, now.hour, now.minute
         ) + datetime.timedelta(seconds=60)
         self.schedule_repeating_event(self.update_dt, callback_time, 10)
-        self.skill_manager = SkillManager(self.bus)
 
         # Handler Registration For Notifications
         self.add_event("homescreen.notification.set",
